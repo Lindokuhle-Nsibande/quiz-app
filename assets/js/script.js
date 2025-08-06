@@ -36,4 +36,28 @@ $(document).ready(function () {
         "Au is the chemical symbol for gold, derived from the Latin word 'aurum'.",
     },
   ];
+
+  let currentQuestion = 0;
+  let score = 0;
+  let userAnswers = [];
+
+  let question = quizData[currentQuestion];
+
+  $('.question-number').text(`Question ${currentQuestion+1} of ${quizData.length}`);
+
+  $('.question-text').text(question.question);
+
+  $('.answers-container').empty();
+
+  question.options.forEach((option, index) => {
+    const answerElement = $(`<div class="answer-option">${String.fromCharCode(65 + index)}. ${option}</div>`);
+
+    $('.answers-container').append(answerElement);
+  });
+
+  // $('.feedback').text(question.explanation).hide();
 });
+
+
+
+
