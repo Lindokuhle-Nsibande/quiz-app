@@ -41,35 +41,64 @@ $(document).ready(function () {
   let score = 0;
   let userAnswers = [];
 
-  let question = quizData[currentQuestion];
 
-  $('.question-number').text(`Question ${currentQuestion+1} of ${quizData.length}`);
+  loadQuestion();
 
-  $('.question-text').text(question.question);
-
-  $('.answers-container').empty();
-
-  question.options.forEach((option, index) => {
-    const answerElement = $(`<div class="answer-option">${String.fromCharCode(65 + index)}. ${option}</div>`);
-
-    answerElement.click(function(){
-      const question = quizData[currentQuestion];
-      const isCorrect = index === question.correct;
-
-      if(isCorrect){
-        score++;
-
-        $('.feedback').text(question.explanation);
-      }
-
-    });
-
-    $('.answers-container').append(answerElement);
+  $('#nextBtn').click(function(){
+    nextQuetion();
   });
 
-  // $('.feedback').text(question.explanation).hide();
+  function loadQuestion(){
+    let question = quizData[currentQuestion];
+
+    $(".question-number").text(
+      `Question ${currentQuestion + 1} of ${quizData.length}`
+    );
+
+    $(".question-text").text(question.question);
+    $(".answers-container").empty();
+
+    question.options.forEach((option, index) => {
+      const answerElement = $(
+        `<div class="answer-option">${String.fromCharCode(
+          65 + index
+        )}. ${option}</div>`
+      );
+
+      answerElement.click(function(){
+        selectAnswer(index);
+      });
+
+      $(".answers-container").append(answerElement);
+    });
+  }
+
+  function selectAnswer(index){
+    console.log('function called');
+    const question = quizData[currentQuestion];
+    const isCorrect = index === question.correct;
+
+    if (isCorrect) {
+      score++;
+    }
+
+    let feedbackText = '';
+    if(isCorrect){
+      feedbackText = 'Correct! '+ question.explanation;
+    }else{
+      feedbackText = 'Incorrect! '+ question.explanation;
+    }
+
+    $(".feedback").text(feedbackText);
+    
+  }
+
+  function nextQuetion(){
+    currentQuestion++;
+    if(currentQuestion < quizData.length){
+      loadQuestion();
+    }
+    
+  }
+
 });
-
-
-
-
