@@ -51,6 +51,11 @@ $(document).ready(function () {
   function loadQuestion(){
     let question = quizData[currentQuestion];
 
+    // progress bar
+    const progress = (currentQuestion/quizData.length) * 100;
+
+    $('.progress-fill').css("width",""+progress+"%");
+
     $(".question-number").text(
       `Question ${currentQuestion + 1} of ${quizData.length}`
     );
@@ -74,10 +79,17 @@ $(document).ready(function () {
   }
 
   function selectAnswer(index){
-    console.log('function called');
+    if($('.answer-option').hasClass("disabled")){
+      return;
+    }
+
+    // disable the options
+    $('.answer-option').addClass('disabled');
+
+    userAnswers[currentQuestion] = index;
+    
     const question = quizData[currentQuestion];
     const isCorrect = index === question.correct;
-
     if (isCorrect) {
       score++;
     }
@@ -96,9 +108,58 @@ $(document).ready(function () {
   function nextQuetion(){
     currentQuestion++;
     if(currentQuestion < quizData.length){
+      $('.feedback').text("");
       loadQuestion();
+    }else{
+      showResults();
     }
     
   }
 
+  function showResults(){
+    $('.progress-fill').css("width","100%");
+    const percentage = (score/quizData.length) * 100;
+    let message = "";
+
+    if(percentage >= 80){
+      message = `You scored ${percentage}%! Excellent Work!`;
+    }else if(percentage >= 60){
+      message = `You scored ${percentage}%! Good Job`;
+    }else if(percentage >= 40){
+      message = `You scored ${percentage}%! Uzamile`;
+    }else{
+      message = `You scored ${percentage}%! Ai ugqomile ncese`;
+    }
+
+    $('.score-display').text(`${score}/${quizData.length}`);
+    $('.score-message').text(message);
+
+    let breakdown = "<h3>Detailed Results:</h3>";
+ 
+    quizData.forEach((question, index)=>{
+
+      const userAnswer = userAnswers[index];
+      let isCorrect = false;
+      let eachResult = "Incorrect";
+      if(userAnswer === question.correct){
+        isCorrect = true;
+        eachResult = "Correct";
+      }
+      breakdown += `<div class="result-item">
+      <span>Question ${index + 1}</span>
+      <span>${eachResult}</span>
+      </div>`;
+
+    });
+
+    $('.results-breakdown').html(breakdown);
+    $('.quiz-content').hide();
+    $('.quiz-controls').hide();
+    $('.results-container').addClass("show");
+
+
+
+    
+    console.log(percentage);
+  }
 });

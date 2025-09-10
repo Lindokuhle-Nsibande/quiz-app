@@ -1,3 +1,21 @@
 .answers-container .answer-option{
     cursor: pointer;
 }
+
+.results-container{
+    display: none;
+}
+.results-container.show{
+    display: block;
+}
+
+.progress-bar{
+    background-color: rgba(61, 61, 61, 0.933);
+    height: 4px;
+}
+
+.progress-fill{
+    background-color: blue;
+    width: 90%;
+    height: 4px;
+}
