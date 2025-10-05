@@ -49,6 +49,10 @@ $(document).ready(function () {
   });
 
   function loadQuestion(){
+
+    $('#nextBtn').prop("disabled", true);
+    $('.feedback').hide();
+
     let question = quizData[currentQuestion];
 
     // progress bar
@@ -85,23 +89,36 @@ $(document).ready(function () {
 
     // disable the options
     $('.answer-option').addClass('disabled');
-
+    $('.feedback').show();
     userAnswers[currentQuestion] = index;
-    
     const question = quizData[currentQuestion];
     const isCorrect = index === question.correct;
+
+    
+    // add incorrect/correct class
+    $('.answer-option').each(function(option){
+      if(option === question.correct){
+        $(this).addClass("correct");
+      }else if(option === index && !isCorrect){
+        $(this).addClass("incorrect");
+      }
+    });
+    
+
     if (isCorrect) {
       score++;
     }
 
     let feedbackText = '';
+    let feedbackClass = "incorrect";
     if(isCorrect){
-      feedbackText = 'Correct! '+ question.explanation;
+      feedbackText = '✅ Correct! '+ question.explanation;
+      feedbackClass = "correct"
     }else{
-      feedbackText = 'Incorrect! '+ question.explanation;
+      feedbackText = '❌ Incorrect! '+ question.explanation;
     }
-
-    $(".feedback").text(feedbackText);
+    $(".feedback").addClass(feedbackClass).text(feedbackText);
+    $('#nextBtn').prop("disabled", false);
     
   }
 
@@ -157,9 +174,5 @@ $(document).ready(function () {
     $('.quiz-controls').hide();
     $('.results-container').addClass("show");
 
-
-
-    
-    console.log(percentage);
   }
 });
