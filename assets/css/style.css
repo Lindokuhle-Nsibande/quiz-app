@@ -87,7 +87,7 @@ body{
 .quiz-controls .btn{
     padding: 12px 30px;
     border-radius: 25px;
-        background: linear-gradient(90deg, #667eea, #764ca3);
+    background: linear-gradient(90deg, #667eea, #764ca3);
     border: none;
     color: white;
     font-weight: 600;
@@ -128,4 +128,29 @@ body{
     background: #d4edda;
     color: #155724;
     border: 1px solid #c3e6cb;
+}
+.results-container h2{
+    text-align: center;
+    margin-bottom: 20px;
+}
+.results-container .score-display{
+    text-align: center;
+    font-size: 50px;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+.results-container .score-message{
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+}
+.result-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0px;
+    border-bottom: 1px solid #e0e0e0;
+}
+.result-item:last-of-type{
+    border: unset;
 }

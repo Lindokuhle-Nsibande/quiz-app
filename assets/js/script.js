@@ -158,12 +158,14 @@ $(document).ready(function () {
       const userAnswer = userAnswers[index];
       let isCorrect = false;
       let eachResult = "Incorrect";
+      let icon = "❌";
       if(userAnswer === question.correct){
         isCorrect = true;
         eachResult = "Correct";
+        icon = "✅";
       }
       breakdown += `<div class="result-item">
-      <span>Question ${index + 1}</span>
+      <span>${icon} Question ${index + 1}</span>
       <span>${eachResult}</span>
       </div>`;
 
